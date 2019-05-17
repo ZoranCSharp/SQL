@@ -1,0 +1,110 @@
+1. select distinct lastname from person.person;
+
+select distinct lastnames in table person
+
+2. select * from production.location
+where locationID >= 30;
+
+select all locations with locationsID bigger or equal than 30
+
+3. select MiddleName, Title, count(*) as NoOfOrders
+from person.person
+group by cube(MiddleName, Title)
+order by MiddleName, Title;
+
+select middlename and title from table person, grouped by cube and ordered by the same values(MiddleName, Title)
+GROUP BY CUBE creates groups for all possible combinations of columns. 
+
+4. select * from Person.Person AS person RIGHT OUTER JOIN Person.BusinessEntity AS ent ON ent.BusinessEntityID = person.BusinessEntityID
+ORDER BY ent.BusinessEntityID;
+
+(right outer join)
+select same values from tables Person and BusinessEntity and all the rest values from BusinessEntity. They are connected with BusinessEntityID key, and they are ordered by BusinessEntityID from BusinessEntity. 
+
+
+5. SELECT TOP 10 WITH TIES *
+FROM Person.CountryRegion
+ORDER BY Name ASC
+
+select top 10 values from table Person.CountryRegion and order them by state name ascending
+TIES - Used when you want to return two or more rows that tie for last place in the limited results set.
+
+6. SELECT SalesPersonID, BusinessEntityID, Name,
+    ROW_NUMBER() OVER(ORDER BY Name) AS RowNumber,
+    RANK() OVER(ORDER BY Name) AS [Rank]
+FROM Sales.Store
+ORDER BY Name 
+
+select values from table  Sales.Store, ordered by name, ranked by name. Ordering by default is ascending.
+
+
+7. SELECT
+    sale.SalesOrderID,
+    sale.SalesOrderNumber,
+    sale.BillToAddressID,
+    a.City,
+    sp.Name AS StateProvinceName,
+    cr.Name AS CountryName
+FROM Sales.SalesOrderHeader AS sale
+    JOIN Person.Address AS a ON a.AddressID = sale.BillToAddressID
+    JOIN Person.StateProvince AS sp ON sp.StateProvinceID = a.StateProvinceID
+    JOIN Person.CountryRegion AS cr ON cr.CountryRegionCode = sp.CountryRegionCode
+ORDER BY CountryName,
+    StateProvinceName,
+    City
+
+select sale.SalesOrderID, sale.SalesOrderNumber, sale.BillToAddressID, a.City, sp.Name AS StateProvinceName, cr.Name AS CountryName. salesorderheader is joined with Person.Address,Person.StateProvince,Person.CountryRegion relations are a.AddressID = sale.BillToAddressID, sp.StateProvinceID = a.StateProvinceID, cr.CountryRegionCode = sp.CountryRegionCode.orderd by CountryName, StateProvinceName, City.
+
+
+8. SELECT CustomerID, COUNT(SalesPersonID) as "Customers per sales person"
+FROM Sales.SalesOrderHeader
+GROUP BY CustomerID
+
+select CustomerID and count SalesPersonID. Take values from SalesOrderHeader. grouped by customerID.
+
+9. SELECT p.Name, p.ReorderPoint
+FROM Production.Product as "p"
+ORDER BY ListPrice asc
+OFFSET 50 ROWS
+
+select name and recorderPoint from table production.product. ordered by listPrice ascending.
+OFFSET - offsetted first 50 rows.
+
+10. SELECT CustomerID, COUNT(DISTINCT SalesPersonID)
+FROM Sales.SalesOrderHeader
+GROUP BY CustomerID
+
+select CustomerID from Sales.SalesOrderHeader and count only distinct values from SalesPersonID row. Grouped by CustomerID in ascending order by default.
+
+11. SELECT * FROM Production.Product
+WHERE Name LIKE '[MHL]L%'
+
+select all from Production.Product where name starts with letters M, H or L.
+
+12. SELECT TOP 5 Name, ProductNumber, Color
+FROM Production.Product
+ORDER BY ListPrice
+
+
+select top 5 names, productnumber and color from production.product. order all by ListPrice in ascending order by default
+
+
+13. SELECT * 
+FROM Production.Product
+ORDER BY ListPrice
+OFFSET 10 ROWS FETCH NEXT 25 ROWS ONLY  
+
+select all from product ordered by listPrice ascending by default
+it ignores first 10 rows and fetch 25 rows next only
+
+
+14. select *
+from Person.StateProvince as "sp" inner join Person.CountryRegion as "cr" on sp.CountryRegionCode = cr.CountryRegionCode
+where sp.CountryRegionCode like 'DE';
+
+select all from Person.StateProvince joined with Person.CountryRegion in relations CountryRegionCode = CountryRegionCode. it lists only values where CountryRegionCode has value 'DE'
+
+
+15. SELECT 'Hello, query!', 'A second value' 
+
+This writes in 2 columns "Hello, query" and "A second value"
