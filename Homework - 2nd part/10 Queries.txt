@@ -1,0 +1,64 @@
+1. select distinct lastname from Customer;
+
+select distinct lastnames in table Customer
+
+2. select Country from Customer
+where Id >= 3;
+
+select all Country with Id bigger or equal than 3
+
+3. select FirstName, LastName, count(*) as Users
+from Customer
+group by cube(FirstName, LastName)
+order by FirstName, LastName;
+
+select FirstName and LastName from table Customer, grouped by cube and ordered by the same values(FirstName, LastName)
+GROUP BY CUBE creates groups for all possible combinations of columns. 
+
+4. select * from Customer AS customer RIGHT OUTER JOIN Order AS ord ON ord.Id = customer.Id
+ORDER BY ord.Id;
+
+(right outer join)
+select same values from tables Person and BusinessEntity and all the rest values from BusinessEntity. They are connected with BusinessEntityID key, and they are ordered by BusinessEntityID from BusinessEntity. 
+
+
+5. SELECT TOP 10 WITH TIES *
+FROM Supplier
+ORDER BY CompanyName ASC
+
+select top 10 values from table Supplier and order them by state CompanyName ascending
+TIES - Used when you want to return two or more rows that tie for last place in the limited results set.
+
+6. SELECT CompanyName, Id, ContactName,
+    ROW_NUMBER() OVER(ORDER BY ContactName) AS RowNumber,
+    RANK() OVER(ORDER BY CompanyName) AS [Rank]
+FROM Supplier
+ORDER BY CompanyName 
+
+select values from table Supplier, ordered by CompanyName , ranked by CompanyName. Ordering by default is ascending.
+
+
+7. SELECT Id, COUNT(ProductName) as "ProductName per id"
+FROM Product
+GROUP BY Id
+
+select Id and count ProductName. Take values from Product. grouped by Id.
+
+8. SELECT p.ProductName, p.UnitPrice
+FROM Product as "p"
+ORDER BY UnitPrice asc
+OFFSET 50 ROWS
+
+select ProductName and UnitPrice from table Product. ordered by UnitPrice ascending.
+OFFSET - offsetted first 50 rows.
+
+9. SELECT Id, COUNT(DISTINCT CustomerId)
+FROM Order
+GROUP BY CustomerId
+
+select Id from Order and count only distinct values from CustomerId row. Grouped by CustomerId in ascending order by default.
+
+10. SELECT * FROM Product
+WHERE ProductName LIKE '[CH]%'
+
+select all from Product where name starts with letters C, H.
